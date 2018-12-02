@@ -223,7 +223,7 @@ class interface(tk.Frame):
     def update_option_menu(self, optionMenu, var):
         menu = optionMenu["menu"]
         menu.delete(0, "end")
-        xassetList = [None,] + self.assetList
+        xassetList = ['None',] + self.assetList
         for string in xassetList:
             menu.add_command(label=string, 
                              command=lambda value=string: var.set(value))
@@ -239,7 +239,7 @@ class interface(tk.Frame):
         self.initializepresence()
         parser.read("data.ini")
         config.read("data.ini")
-        self.assetList = ['None', ] + literal_eval(config.get('config', 'assets'))
+        self.assetList = literal_eval(config.get('config', 'assets'))
         self.update_option_menu(self.smallOptMenu, self.smallVar)
         self.update_option_menu(self.largeOptMenu, self.largeVar)
         self.buttonRP.configure( text='ON COOLDOWN', state=tk.DISABLED, background='#3B3E44', foreground='#ffffff' )
@@ -407,6 +407,8 @@ class interface(tk.Frame):
             self.assetVar.set(self.assetListbox.get(tk.ACTIVE))
             self.assetFinishedButton.config(text='DELETE', width=0, background="#e07676", foreground='#ffffff', activebackground="#e07676", activeforeground="#ffffff", highlightbackground="#e07676", command=self.assetDelete)
             self.assetFinishedButton.place(y=185, x=300)
+        
+        
     
     def assetAdd(self):
         
@@ -420,6 +422,10 @@ class interface(tk.Frame):
             self.assetVar.set('')
             self.assetListbox.selection_clear(0)
             self.assetFinishedButton.place_forget()
+            config.read("data.ini")
+            self.assetList = literal_eval(config.get('config', 'assets'))
+            self.update_option_menu(self.smallOptMenu, self.smallVar)
+            self.update_option_menu(self.largeOptMenu, self.largeVar)
     
     def assetDelete(self):
         self.assetList.remove(self.assetVar.get())
@@ -432,6 +438,10 @@ class interface(tk.Frame):
         self.assetVar.set('')
         self.assetListbox.selection_clear(0)
         self.assetFinishedButton.place_forget()
+        config.read("data.ini")
+        self.assetList = literal_eval(config.get('config', 'assets'))
+        self.update_option_menu(self.smallOptMenu, self.smallVar)
+        self.update_option_menu(self.largeOptMenu, self.largeVar)
 
     def configTab(self):
         self.unpack()
