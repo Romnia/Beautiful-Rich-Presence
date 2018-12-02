@@ -148,8 +148,6 @@ class interface(tk.Frame):
             self.largeVar.set(xassetList[0])
         if self.smallVar.get() not in self.assetList:
             self.smallVar.set(xassetList[0])
-
-        print(self.largeVar.get())
                 
         ##########
 
