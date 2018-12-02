@@ -148,6 +148,7 @@ class interface(tk.Frame):
             self.largeVar.set(xassetList[0])
         if self.smallVar.get() not in self.assetList:
             self.smallVar.set(xassetList[0])
+
                 
         ##########
 
@@ -212,10 +213,13 @@ class interface(tk.Frame):
         self.mainTab()
 
     def endprogram(self):
-        if self.isconnected:
-            if self.opened:
-                self.rp.clear()
-            self.rp.close()
+        try:
+            if self.isconnected:
+                if self.opened:
+                    self.rp.clear()
+                self.rp.close()
+        except:
+            pass
         root.destroy()
         exit("Program closed by user")
 
