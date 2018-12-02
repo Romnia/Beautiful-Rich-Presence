@@ -149,6 +149,7 @@ class interface(tk.Frame):
         if self.smallVar.get() not in self.assetList:
             self.smallVar.set(xassetList[0])
 
+        print(self.largeVar.get())
                 
         ##########
 
@@ -227,6 +228,11 @@ class interface(tk.Frame):
         for string in xassetList:
             menu.add_command(label=string, 
                              command=lambda value=string: var.set(value))
+        
+        if self.largeVar.get() not in self.assetList:
+            self.largeVar.set(xassetList[0])
+        if self.smallVar.get() not in self.assetList:
+            self.smallVar.set(xassetList[0])
 
     def refresh(self):
         if self.isconnected:
