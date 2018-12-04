@@ -203,6 +203,23 @@ class interface(tk.Frame):
         self.assetSelectButton = tk.Button(self.widgetframe, text='SELECT', font=("Helvetica", 10),  width=14, command=self.assetSelect)
         self.assetFinishedButton = tk.Button(self.widgetframe, text='', font=("Helvetica", 10), width=14)
 
+        #################
+
+        # CONFIG TAB #
+
+        # Variables
+
+        # ALREADY DEFINED self.client_id
+
+        ##########
+
+        self.configClientIDLabel = tk.Label(self.widgetframe, text='Client ID: ', font=("Helvetica", 9), background='#36393F', foreground='#ededed')
+        self.configClientIDEntry = tk.Entry(self.widgetframe, text='clientid', state=tk.NORMAL, borderwidth=0.8, width=21, textvariable=self.client_id, font=("Helvetica", 10), background='#484B51', foreground='#ffffff', insertbackground='#ffffff', disabledbackground='#34363a', disabledforeground='#b7b3b3')
+
+        self.configSaveButton = tk.Button(self.widgetframe, text='SAVE & REFRESH', font=("Helvetica", 10), width=20, command=self.configSave, background="#4d915b", foreground='#ffffff', activebackground="#4d915b", activeforeground="#ffffff", highlightbackground="#4d915b")
+
+        #################
+
         root.protocol('WM_DELETE_WINDOW', self.endprogram)
 
 
@@ -214,10 +231,8 @@ class interface(tk.Frame):
 
     def endprogram(self):
         try:
-            if self.isconnected:
-                if self.opened:
-                    self.rp.clear()
-                self.rp.close()
+            self.rp.clear()
+            self.rp.close()
         except:
             pass
         root.destroy()
@@ -245,27 +260,34 @@ class interface(tk.Frame):
         config.read('data.ini')
         self.client_id.set(config.get('client', 'id'))
         self.initializepresence()
-        parser.read("data.ini")
-        config.read("data.ini")
-        self.assetList = literal_eval(config.get('config', 'assets'))
-        self.update_option_menu(self.smallOptMenu, self.smallVar)
-        self.update_option_menu(self.largeOptMenu, self.largeVar)
-        self.buttonRP.configure( text='ON COOLDOWN', state=tk.DISABLED, background='#3B3E44', foreground='#ffffff' )
-        self.refresh_Button.configure( state=tk.DISABLED, background='#3B3E44', foreground='#b7b7b7' )
-        self.updatestatus(text="| Refreshed config  | COOLDOWN (10)", color="#202225")
-        self.status_Status.after(1000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (9)", color="#202225"))
-        self.status_Status.after(2000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (8)", color="#202225"))
-        self.status_Status.after(3000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (7)", color="#202225"))
-        self.status_Status.after(4000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (6)", color="#202225"))
-        self.status_Status.after(5000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (5)", color="#202225"))
-        self.status_Status.after(6000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (4)", color="#202225"))
-        self.status_Status.after(7000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (3)", color="#202225"))
-        self.status_Status.after(8000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (2)", color="#202225"))
-        self.status_Status.after(9000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (1)", color="#202225"))
-        self.status_Status.after(10000, lambda: self.updatestatus(text="| Refreshed config | COOLDOWN (DONE)", color="#202225"))
-        self.buttonRP.after(10000, lambda: self.buttonRP.config(text='SET', state=tk.ACTIVE, background='#7289da', foreground='#ffffff', activebackground="#7289da", activeforeground="#ffffff", highlightbackground="#7289da"))
-        self.refresh_Button.after(10000, lambda: self.refresh_Button.configure(state=tk.ACTIVE, background="#4a4d54", activebackground="#4a4d54", foreground="#ededed", activeforeground="#ededed"))        
-        self.status_Status.after(14000, lambda: self.updatestatus(text="| Refreshed config |", color="#202225"))
+        if self.isconnected:
+            parser.read("data.ini")
+            config.read("data.ini")
+            self.assetList = literal_eval(config.get('config', 'assets'))
+            self.update_option_menu(self.smallOptMenu, self.smallVar)
+            self.update_option_menu(self.largeOptMenu, self.largeVar)
+            self.buttonRP.configure( text='ON COOLDOWN', state=tk.DISABLED, background='#3B3E44', foreground='#ffffff' )
+            self.refresh_Button.configure( state=tk.DISABLED, background='#3B3E44', foreground='#b7b7b7' )
+            self.configClientIDEntry.configure(state=tk.DISABLED)
+            self.configSaveButton.configure(state=tk.DISABLED, background='#3B3E44', foreground='#b7b7b7')
+            self.updatestatus(text="| Refreshed config  | COOLDOWN (10)", color="#202225")
+            self.status_Status.after(1000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (9)", color="#202225"))
+            self.status_Status.after(2000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (8)", color="#202225"))
+            self.status_Status.after(3000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (7)", color="#202225"))
+            self.status_Status.after(4000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (6)", color="#202225"))
+            self.status_Status.after(5000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (5)", color="#202225"))
+            self.status_Status.after(6000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (4)", color="#202225"))
+            self.status_Status.after(7000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (3)", color="#202225"))
+            self.status_Status.after(8000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (2)", color="#202225"))
+            self.status_Status.after(9000, lambda: self.updatestatus(text="| Refreshed config  | COOLDOWN (1)", color="#202225"))
+            self.status_Status.after(10000, lambda: self.updatestatus(text="| Refreshed config | COOLDOWN (DONE)", color="#202225"))
+            self.buttonRP.after(10000, lambda: self.buttonRP.config(text='SET', state=tk.ACTIVE, background='#7289da', foreground='#ffffff', activebackground="#7289da", activeforeground="#ffffff", highlightbackground="#7289da"))
+            self.refresh_Button.after(10000, lambda: self.refresh_Button.configure(state=tk.ACTIVE, background="#4a4d54", activebackground="#4a4d54", foreground="#ededed", activeforeground="#ededed"))        
+            self.refresh_Button.after(10000, lambda: self.configClientIDEntry.configure(state=tk.NORMAL))
+            self.refresh_Button.after(10000, lambda: self.configSaveButton.configure(state=tk.ACTIVE, background='#4d915b', foreground='#ffffff', activebackground="#4d915b"))
+            self.status_Status.after(14000, lambda: self.updatestatus())
+        else:
+            self.updatestatus()
 
     def initializepresence(self):
         try:
@@ -324,14 +346,19 @@ class interface(tk.Frame):
             self.assetLabel.place_forget()
             self.assetEntry.place_forget()
 
-            self.assetListbox.place_forget()
+            self.assetListbox.pack_forget()
             self.assetScrollbar.place_forget()
-            self.assetSelectButton.place_forget()
+            self.assetSelectButton.pack_forget()
 
             self.assetFinishedButton.place_forget()
 
         elif self.tabName == 'config':
-            pass
+            
+            self.configClientIDEntry.place_forget()
+            self.configClientIDLabel.place_forget()
+
+            self.configSaveButton.pack_forget()
+
         elif self.tabName == 'credits':
             pass
     
@@ -339,7 +366,6 @@ class interface(tk.Frame):
         self.main_Tab.configure(activebackground="#4a4d54", background="#4a4d54", foreground="#ededed", state=tk.ACTIVE)
         self.asset_Tab.configure(activebackground="#4a4d54", background="#4a4d54", foreground="#ededed", state=tk.ACTIVE)
         self.config_Tab.configure(activebackground="#4a4d54", background="#4a4d54", foreground="#ededed", state=tk.ACTIVE)
-
 
     def mainTab(self):
         self.unpack()
@@ -388,9 +414,10 @@ class interface(tk.Frame):
         self.assetLabel.place(y=15, x=25)
         self.assetEntry.place(y=35, x=25)
 
-        self.assetListbox.place(y=10, x=370)
-        self.assetScrollbar.place(y=10, x=370)
-        self.assetSelectButton.place(y=185, x=370)
+        self.assetSelectButton.pack(side=tk.BOTTOM, anchor=tk.E, padx=7, pady=7)
+
+        self.assetListbox.pack(side=tk.BOTTOM, anchor=tk.E, padx=7, pady=7)
+        
 
         self.assetListbox.delete(0, tk.END)
 
@@ -408,16 +435,13 @@ class interface(tk.Frame):
             self.assetLabel.config(text='New Asset Name:')
             self.assetEntry.config(font=("Helvetica", 10, "normal"), state=tk.NORMAL)
             self.assetFinishedButton.config(text='ADD', width=0, background="#5baf66", foreground='#ffffff', activebackground="#5baf66", activeforeground="#ffffff", highlightbackground="#5baf66", command=self.assetAdd)
-            self.assetFinishedButton.place(y=185, x=310)
         else:
             self.assetLabel.config(text='Asset Name:')
             self.assetEntry.config(font=("Helvetica", 10, "italic"), state=tk.DISABLED)
             self.assetVar.set(self.assetListbox.get(tk.ACTIVE))
             self.assetFinishedButton.config(text='DELETE', width=0, background="#e07676", foreground='#ffffff', activebackground="#e07676", activeforeground="#ffffff", highlightbackground="#e07676", command=self.assetDelete)
-            self.assetFinishedButton.place(y=185, x=300)
-        
-        
-    
+        self.assetFinishedButton.place(y=32, x=200)
+     
     def assetAdd(self):
         
         if self.assetVar.get() != "" or not self.assetVar.get().isspace():
@@ -458,7 +482,24 @@ class interface(tk.Frame):
         self.tabName = str('config') # Tab name
         root.title(self.tabName +  " - Beautiful Rich Presence")
 
+        self.configClientIDLabel.place(y=15, x=25)
+        self.configClientIDEntry.place(y=35, x=25)
         
+        self.configSaveButton.pack(side=tk.BOTTOM, anchor=tk.E, padx=7, pady=7)
+
+
+    def configSave(self):
+        try:
+            int(self.client_id.get())
+            if self.client_id.get() != "" and not self.client_id.get().isspace():
+                self.client_id.set("".join(self.client_id.get().split()))
+                parser.set('client', 'id', str(self.client_id.get()))
+                parser.set('client', 'firststartup', str(1))
+                with open('data.ini', 'w') as configfile:
+                    parser.write(configfile)
+                self.refresh()
+        except:
+            self.updatestatus(text="Client ID has to be numbers only", color="#da7272") 
 
     def creditsTab(self):
         self.unpack()
@@ -477,10 +518,6 @@ class interface(tk.Frame):
         # self.smallhoverVar = tk.StringVar()
         ##########
         self.updatestatus
-        try:
-            self.rp.clear()
-        except:
-            pass
         if self.topVar.get() != "" and not self.topVar.get().isspace():
             if self.bottomVar.get() != "" and not self.bottomVar.get().isspace():
                 if self.timerEntryVar.get() != "" and not self.timerEntryVar.get().isspace():
@@ -527,6 +564,8 @@ class interface(tk.Frame):
                         self.opened = True
                         self.buttonRP.configure( text='ON COOLDOWN', state=tk.DISABLED, background='#3B3E44', foreground='#ffffff' )
                         self.refresh_Button.configure( state=tk.DISABLED, background='#3B3E44', foreground='#b7b7b7' )
+                        self.configClientIDEntry.configure(state=tk.DISABLED)
+                        self.configSaveButton.configure(state=tk.DISABLED, background='#3B3E44', foreground='#b7b7b7')
                         self.updatestatus(text="| Presence is set  | COOLDOWN (15)", color="#202225")
                         self.status_Status.after(1000, lambda: self.updatestatus(text="| Presence is set  | COOLDOWN (14)", color="#202225"))
                         self.status_Status.after(2000, lambda: self.updatestatus(text="| Presence is set  | COOLDOWN (13)", color="#202225"))
@@ -546,6 +585,8 @@ class interface(tk.Frame):
                         self.status_Status.after(17000, lambda: self.updatestatus(text="| Presence is set |", color="#202225"))
                         self.refresh_Button.after(15000, lambda: self.refresh_Button.configure(state=tk.ACTIVE, background="#4a4d54", activebackground="#4a4d54", foreground="#ededed", activeforeground="#ededed"))
                         self.buttonRP.after(15000, lambda: self.buttonRP.config(text='SET', state=tk.ACTIVE, background='#7289da', foreground='#ffffff', activebackground="#7289da", activeforeground="#ffffff", highlightbackground="#7289da"))
+                        self.refresh_Button.after(15000, lambda: self.configClientIDEntry.configure(state=tk.NORMAL))
+                        self.refresh_Button.after(15000, lambda: self.configSaveButton.configure(state=tk.ACTIVE, background='#4d915b', foreground='#ffffff', activebackground="#4d915b"))
                         parser.read('data.ini')
                         parser.set('lastpresence', 'remember', str(self.rememberVar.get()))
                         if str(self.rememberVar.get()) == '1':
